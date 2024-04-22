@@ -3,13 +3,6 @@ import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-const defaultImages = [
-  "/images/default-blue.jpg",
-  "/images/default-red.jpg",
-  "/images/default-green.jpg",
-  "/images/default-yellow.jpg"
-]
-
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
 
@@ -42,7 +35,7 @@ const ProfilesPage = () => {
           <div onClick={() => router.push("/")}>
             <div className="group flex-row w-44 mx-auto">
               <div className="w-44 h-44 rounded-md flex items-center justify-center border-2 border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
-                <img src={defaultImages[Math.floor(Math.random() * defaultImages.length)]} alt="Profile" />
+                <img src="/images/default-blue.jpg" alt="Profile" />
               </div>
 
               <div className="mt-4 text-gray-400 text-2xl text-center group-hover:text-white">
