@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
-import prismadb from "../../lib/prismadb";
+import prisma from "../../lib/prismadb";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Only allow POST calls to this route
@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const { email, name, password } = req.body;
 
-    const existingUser = await prismadb.user.findUnique({
+    const existingUser = await prisma.user.findUnique({
       where: {
         email,
       }
@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const user = await prismadb.user.create({
+    const user = await prisma.user.create({
       data: {
         email,
         name,
