@@ -2,11 +2,7 @@ import useBillboard from "@/hooks/useBillboard";
 
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
-interface BillboardProps {
-
-}
-
-const Billboard: React.FC<BillboardProps> = () => {
+const Billboard = () => {
   const { data } = useBillboard();
 
   return (
