@@ -1,19 +1,23 @@
 import { NextApiRequest } from "next";
-import { getSession } from "next-auth/react";
 
 import prisma from "./prismadb";
+import { getToken } from "next-auth/jwt";
 
 const serverAuth = async (req: NextApiRequest) => {
   // This uses the JWT token to get the logged user
-  const session = await getSession({ req });
+  const user = await getToken({
+    req,
+    secret: process.env.NEXTAUTH_JWT_SECRET,
+    cookieName: process.env.NODE_ENV === "production" ? "__Secure-next-auth.session-token" : "next-auth.session-token"
+  });
 
-  if (!session?.user?.email) {
+  if (!user?.email) {
     throw new Error("Not signed in");
   }
 
   const currentUser = await prisma.user.findUnique({
     where: {
-      email: session.user.email
+      email: user.email
     }
   });
 
