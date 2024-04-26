@@ -10,24 +10,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     await serverAuth(req);
 
-    const { moviedId } = req.query;
+    const { movieId } = req.query;
 
-    if (!moviedId) {
-      throw new Error("Invalid movie Id");
+    if (typeof movieId !== "string") {
+      throw new Error("Invalid movie ID");
     }
 
-    if (typeof moviedId !== "string") {
+    if (!movieId) {
       throw new Error("Invalid movie ID");
     }
 
     const movie = await prisma.movie.findUnique({
       where: {
-        id: moviedId
+        id: movieId
       }
     });
 
     if (!movie) {
-      throw new Error("Invalid movie Id");
+      throw new Error("Invalid movie ID");
     }
 
     return res.status(200).json(movie);
